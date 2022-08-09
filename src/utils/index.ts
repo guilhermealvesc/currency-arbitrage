@@ -6,7 +6,6 @@ export function generateGraph(numberOfNodes: number): Graph {
 }
 
 function generateGraphByData(coins: CurrencyExchanges): Graph {
-
   const graph = new Graph();
   coins.forEach(([fromCoin, exchangeCoins]) => {
     graph.setNode(fromCoin);
