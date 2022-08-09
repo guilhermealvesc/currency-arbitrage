@@ -1,6 +1,7 @@
 import { Graph } from "graphlib";
+import { IBellmanFordResponse } from "./interface/responses";
 
-export function bellmanFord(graph: Graph, startNode: string) {
+export function bellmanFord(graph: Graph, startNode: string): IBellmanFordResponse {
   const nodeCount = graph.nodeCount()
   const distances = new Array(nodeCount);
   const predecessors = new Array(nodeCount);
