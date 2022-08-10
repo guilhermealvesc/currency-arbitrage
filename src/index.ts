@@ -1,8 +1,16 @@
 import { bellmanFord } from "./algorithms/bellmanFord";
 import { findNegativeWeightCycle } from "./algorithms/findNegativeWeightCycle";
 import { generateGraph } from "./utils";
+const nodeCount = 4;
 
-const graph = generateGraph(3);
+const graph = generateGraph(nodeCount);
+
+graph.setNode(nodeCount.toString())
+
+graph.nodes().forEach(node => {
+  if(node !== nodeCount.toString())
+    graph.setEdge(nodeCount.toString(), node, 0);
+})
 
 console.log("nodes: ", graph.nodeCount());
 console.log(graph.nodes());
@@ -12,7 +20,7 @@ graph.edges().map((edge) => {
   console.log(edge, graph.edge(edge.v, edge.w))
 })
 
-const response = bellmanFord(graph, '0');
+const response = bellmanFord(graph, nodeCount.toString());
 console.log("bellmanFord: ");
 
 response.distances.forEach((value, index) => {

@@ -13,8 +13,8 @@ function generateGraphByData(coins: CurrencyExchanges): Graph {
     exchangeCoins.forEach(([toCoin, exchangeValue]) => {
       graph.setNode(toCoin);
 
-      graph.setEdge(fromCoin, toCoin, -Math.log2(exchangeValue));
-      graph.setEdge(toCoin, fromCoin, -Math.log2(1/exchangeValue));
+      graph.setEdge(fromCoin, toCoin, -Math.log2(exchangeValue).toFixed(1));
+      graph.setEdge(toCoin, fromCoin, -Math.log2(1/exchangeValue).toFixed(1));
     })
 
   })
