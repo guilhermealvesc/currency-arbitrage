@@ -13,7 +13,6 @@ function generateGraphByData(coins: CurrencyExchanges): Graph {
     exchangeCoins.forEach(([toCoin, exchangeValue]) => {
       graph.setNode(toCoin);
 
-      console.log(fromCoin, toCoin, -Math.log2(exchangeValue));
       graph.setEdge(fromCoin, toCoin, -Math.log2(exchangeValue));
       graph.setEdge(toCoin, fromCoin, -Math.log2(1/exchangeValue));
     })

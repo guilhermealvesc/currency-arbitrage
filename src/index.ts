@@ -1,7 +1,8 @@
 import { bellmanFord } from "./algorithms/bellmanFord";
+import { findNegativeWeightCycle } from "./algorithms/findNegativeWeightCycle";
 import { generateGraph } from "./utils";
 
-const graph = generateGraph(5);
+const graph = generateGraph(3);
 
 console.log("nodes: ", graph.nodeCount());
 console.log(graph.nodes());
@@ -13,6 +14,7 @@ graph.edges().map((edge) => {
 
 const response = bellmanFord(graph, '0');
 console.log("bellmanFord: ");
+
 response.distances.forEach((value, index) => {
   console.log(`node: ${index}, distance: ${value}`)
 })
@@ -20,3 +22,7 @@ response.distances.forEach((value, index) => {
 response.predecessors.forEach((value, index) => {
   console.log(`node: ${index}, predecessor: ${value}`)
 })
+
+const nodesInCycle = findNegativeWeightCycle(graph, response.distances, response.predecessors);
+
+console.log("nodes in cycle: ", nodesInCycle);

@@ -13,7 +13,7 @@ export function bellmanFord(graph: Graph, startNode: string): IBellmanFordRespon
 
   distances[Number(startNode)] = 0;
 
-  for(let i = 0; i < nodeCount; i++) {
+  for(let i = 0; i < nodeCount - 1; i++) {
     graph.edges().forEach(({v, w}) => {
 
       if(distances[+w] > distances[+v] + graph.edge(v, w)) {
@@ -22,8 +22,10 @@ export function bellmanFord(graph: Graph, startNode: string): IBellmanFordRespon
       }
     })
   }
+
   return {
     distances,
     predecessors
   }
 }
+
