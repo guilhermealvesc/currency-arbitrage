@@ -1,1 +1,0 @@
-export type CurrencyExchanges = [string, [string, number][]][]

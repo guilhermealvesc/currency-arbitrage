@@ -1,55 +1,28 @@
-import { Graph } from 'graphlib'
-import { CurrencyExchanges } from './interface/CurrencyExchanges';
+import { Graph } from 'graphlib';
 
-export function generateGraph(numberOfNodes: number): Graph {
-  return generateGraphByData(generateData(numberOfNodes));
-}
-
-function generateGraphByData(coins: CurrencyExchanges): Graph {
+// Gera grafo completo
+export function generateGraph(size: number): Graph {
   const graph = new Graph();
-  coins.forEach(([fromCoin, exchangeCoins]) => {
-    graph.setNode(fromCoin);
-    
-    exchangeCoins.forEach(([toCoin, exchangeValue]) => {
-      graph.setNode(toCoin);
+  const log = Math.log;
 
-      graph.setEdge(fromCoin, toCoin, -Math.log2(exchangeValue).toFixed(1));
-      graph.setEdge(toCoin, fromCoin, -Math.log2(1/exchangeValue).toFixed(1));
-    })
+  // Cria nós até a quantidade informada
+  for (let i = 0; i < size; i++)
+    graph.setNode(i.toString(), {});
+  
+  // Loop aninhado para criar arestas entre todos os nós
+  graph.nodes().forEach(node1 => {
+    graph.nodes().forEach(node2 => {
+      // Se já houver aresta, ignora
+      if (node1 === node2 || graph.hasEdge(node1, node2)) return;
+      else {
+        const random = Math.random() * 3;
 
+        // Aresta negativa para rodar bellman ford
+        graph.setEdge(node1, node2, -log(random).toFixed(3));
+        graph.setEdge(node2, node1, -log(1/random).toFixed(3));
+      }
+    })  
   })
 
   return graph;
-}
-
-function generateData(length: number): CurrencyExchanges {
-  const nodes: CurrencyExchanges = Array.from({ length }, (_, i) => ([i.toString(), []]));
-
-  const visitedNodes = new Array<number>(length);
-
-  for(let i = 0; i < visitedNodes.length; i++) {
-    visitedNodes[i] = 0;
-  }
-
-  while(visitedNodes.findIndex(visited => visited !== 3) !== -1) {
-    let startNode, endNode, conversionValue = Math.random() * 10;
-
-    do {
-      startNode = Math.floor(Math.random() * length)
-      endNode = Math.floor(Math.random() * length)
-    } while(startNode === endNode);
-
-    if(visitedNodes[startNode] === 3 && visitedNodes[endNode] === 3)
-      continue;
-
-    nodes[startNode][1].push([endNode.toString(), conversionValue]);
-    
-    if(visitedNodes[startNode] !== 3)
-      visitedNodes[startNode] ++;
-
-    if(visitedNodes[endNode] !== 3)
-      visitedNodes[endNode] ++;
-  }
-
-  return nodes;
 }

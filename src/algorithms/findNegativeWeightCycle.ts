@@ -2,8 +2,13 @@ import { Graph } from "graphlib";
 
 export function findNegativeWeightCycle(graph: Graph, distances: number[], predecessors: number[]): string[] {
   let nodesInCycle: string[] = [];
+  // Array de arestas do grafo
+  // Cada edge é um objeto contendo o nó de origem e o 
+  // nó de destino
   const edges = graph.edges()
 
+  // Acha ciclo negativo, tentando mais uma relaxamento,
+  // se houver, quer dizer que existe um ciclo negativo
   for(const {v, w} of edges) {
     if(distances[+w] > distances[+v] + graph.edge(v, w)) {
 
